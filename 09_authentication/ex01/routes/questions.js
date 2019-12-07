@@ -1,14 +1,13 @@
 const express = require('express');
-const Tour = require('../models/tour');
-// const User = require('../models/user'); 
-const Comment = require('../models/comment'); 
+const Question = require('../models/question');
+const Answer = require('../models/answer'); 
 const catchErrors = require('../lib/async-error');
 
 const router = express.Router();
 
 // 동일한 코드가 users.js에도 있습니다. 이것은 나중에 수정합시다.
 function needAuth(req, res, next) {
-  if (req.session.user) {
+  if (req.isAuthenticated()) {
     next();
   } else {
     req.flash('danger', 'Please signin first.');
@@ -16,7 +15,7 @@ function needAuth(req, res, next) {
   }
 }
 
-/* GET tour listing. */
+/* GET questions listing. */
 router.get('/', catchErrors(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -29,30 +28,30 @@ router.get('/', catchErrors(async (req, res, next) => {
       {content: {'$regex': term, '$options': 'i'}}
     ]};
   }
-  const tour = await Tour.paginate(query, {
-    sort: {createdAt: -1}, //최신 순서대로 listing
+  const questions = await Question.paginate(query, {
+    sort: {createdAt: -1}, 
     populate: 'author', 
-    page: page, 
-    limit: limit
+    page: page, limit: limit
   });
-  res.render('tour/index', {tour: tour, query: req.query});
+  res.render('questions/index', {questions: questions, term: term, query: req.query});
 }));
 
 router.get('/new', needAuth, (req, res, next) => {
-  res.render('tour/new', {question: {}});
+  res.render('questions/new', {question: {}});
 });
 
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
-  res.render('tour/edit', {question: tour});
+  const question = await Question.findById(req.params.id);
+  res.render('questions/edit', {question: question});
 }));
 
 router.get('/:id', catchErrors(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('author');
-  const comments = await Answer.find({question: question.id}).populate('author');
+  const question = await Question.findById(req.params.id).populate('author');
+  const answers = await Answer.find({question: question.id}).populate('author');
   question.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
+
   await question.save();
-  res.render('tour/show', {question: question, answers: answers});
+  res.render('questions/show', {question: question, answers: answers});
 }));
 
 router.put('/:id', catchErrors(async (req, res, next) => {
@@ -68,17 +67,17 @@ router.put('/:id', catchErrors(async (req, res, next) => {
 
   await question.save();
   req.flash('success', 'Successfully updated');
-  res.redirect('/tour');
+  res.redirect('/questions');
 }));
 
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   await Question.findOneAndRemove({_id: req.params.id});
   req.flash('success', 'Successfully deleted');
-  res.redirect('/tour');
+  res.redirect('/questions');
 }));
 
 router.post('/', needAuth, catchErrors(async (req, res, next) => {
-  const user = req.session.user;
+  const user = req.user;
   var question = new Question({
     title: req.body.title,
     author: user._id,
@@ -87,15 +86,15 @@ router.post('/', needAuth, catchErrors(async (req, res, next) => {
   });
   await question.save();
   req.flash('success', 'Successfully posted');
-  res.redirect('/tour');
+  res.redirect('/questions');
 }));
 
 router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
-  const user = req.session.user;
+  const user = req.user;
   const question = await Question.findById(req.params.id);
 
   if (!question) {
-    req.flash('danger', 'Not exist Tour item');
+    req.flash('danger', 'Not exist question');
     return res.redirect('back');
   }
 
@@ -108,8 +107,8 @@ router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   question.numAnswers++;
   await question.save();
 
-  req.flash('success', 'Successfully commented');
-  res.redirect(`/tour/${req.params.id}`);
+  req.flash('success', 'Successfully answered');
+  res.redirect(`/questions/${req.params.id}`);
 }));
 
 

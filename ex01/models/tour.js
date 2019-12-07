@@ -3,16 +3,19 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var schema = new Schema({
-  author: { type: Schema.Types.ObjectId, ref: 'User' },
-  question: { type: Schema.Types.ObjectId, ref: 'Question' },
+  guide: { type: Schema.Types.ObjectId, ref: 'User' },
+  title: {type: String, trim: true, required: true},
   content: {type: String, trim: true, required: true},
+  tags: [String],
   numLikes: {type: Number, default: 0},
+  numCommments: {type: Number, default: 0},
+  numReads: {type: Number, default: 0},
   createdAt: {type: Date, default: Date.now}
 }, {
   toJSON: { virtuals: true},
   toObject: {virtuals: true}
 });
 schema.plugin(mongoosePaginate);
-var Answer = mongoose.model('Answer', schema);
+var Tour = mongoose.model('Tour', schema);
 
-module.exports = Answer;
+module.exports = Tour;
