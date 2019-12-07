@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic|Raleway|Roboto&display=swap");
+
+body {
+    font-family: 'Nanum Gothic', 'Roboto', cursive;
+    margin-top: 50px;
+    padding-top: 1em; }
+
+/* view > includes > topnav.pug    */
+.header > .navbar {
+    background-color: rgb(15, 157, 189) !important;
+    font : white; } 
+    /* !important : 속성 강제 적용 */
+
+/* view > includes > footer.pug   */
+.footer {
+    margin-top: 1em;
+    padding-top: 1em;
+    color: black;
+    border-top: .05rem solid gray; }
+
+/* view > singin.pug */
+.form-signin {
+    width: 300px;
+    margin: 0 auto;
+    padding: 1em; }
+    .form-signin .form-signin-heading, .form-signin .checkbox {
+        margin-bottom: 10px; }
+    .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px; }
+    .form-signin .form-control:focus {
+        z-index: 2; }
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0; }
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0; }
+    .form-signin .sub {
+        margin: 1em 0; }
+    
+
+    
