@@ -29,9 +29,11 @@ module.exports = function(passport) {
 
   passport.use(new FacebookStrategy({
     //   leeleeleelee998@gmail.com qazs12 : 페북 로그인 이메일주소
-    
+
     // 이 부분을 여러분 Facebook App의 정보로 수정해야 합니다.
-    // --> 내 앱 정보로 수정 완료! 이 버튼을 클릭하면 나의 페북 페이지가 뜬다. 
+    // --> 내 앱 정보로 수정 완료! 
+    // 마이리얼트립에서는 페북으로 로그인하기를 할 경우, '마이리얼트립 앱에서 수신하는 정보 : ~ '
+    
     clientID : '2653816261399626',
     clientSecret : '712e7c359a6c486b8846ad86c29a377b',
     callbackURL : 'http://localhost:3000/auth/facebook/callback',

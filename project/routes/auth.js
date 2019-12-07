@@ -21,14 +21,14 @@ module.exports = (app, passport) => {
         failureRedirect : '/signin',
         failureFlash : true // allow flash messages
       }), (req, res, next) => {
-        req.flash('success', 'Welcome!');
-        res.redirect('/questions');
+        req.flash('success', '마이리얼트립에 오신 걸 환영합니다.');
+        res.redirect('/items');
       }
     );
   
     app.get('/signout', (req, res) => {
       req.logout();
-      req.flash('success', 'Successfully signed out');
+      req.flash('success', '로그아웃 되었습니다.');
       res.redirect('/');
     });
   };
