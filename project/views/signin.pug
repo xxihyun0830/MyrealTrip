@@ -1,6 +1,9 @@
 //- 로그인하는 페이지
-//- option : facebook 연동 로그인하기
-//- option :
+//- option : facebook 연동 로그인하기 !
+//- option : 비밀번호 찾기 ?
+//- option : 비밀번호 암호화 ?
+//- option : 로그인 상태 유지
+
 
 extends layout
 
@@ -27,8 +30,10 @@ block content
             input(type="checkbox", value="remember-me")
             |
             | 로그인 상태 유지
-
-        a(href='/reset-password') 비밀번호 찾기
+            | &nbsp;
+            | &nbsp;
+            | &nbsp;
+            a(href='/reset-password') 비밀번호 찾기
 
         button.btn.btn-primary.btn-block(type='submit') 이메일로 로그인하기
 
@@ -40,6 +45,7 @@ block content
 
         div.sub 
           | 아직 마이리얼트립 회원이 아니신가요? 
+          | &nbsp;
           a(href='/users/new') 회원가입
-          |
+          
 
