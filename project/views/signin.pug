@@ -13,6 +13,13 @@ block content
       form.form-signin(action='/signin', method='POST')
         h3.form-signin-heading 로그인하기
 
+        //-option : facebook으로 로그인하기  
+        a.btn.btn-light.btn-block(href='/auth/facebook')
+          i.fa.fa-facebook.fa-lg
+          | &nbsp;
+          | Signin with Facebook
+
+
         label.sr-only(for='email') 이메일*
         input(
           type='email', id='email', name='email', class='form-control', 
@@ -37,12 +44,7 @@ block content
 
         button.btn.btn-primary.btn-block(type='submit') 이메일로 로그인하기
 
-        //-option : facebook으로 로그인하기  
-        a.btn.btn-dark.btn-block(href='/auth/facebook')
-          i.fa.fa-facebook.fa-lg
-          | &nbsp;
-          | Signin with Facebook
-
+        
         div.sub 
           | 아직 마이리얼트립 회원이 아니신가요? 
           | &nbsp;
