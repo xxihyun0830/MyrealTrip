@@ -6,11 +6,9 @@ var schema = new Schema({
     user_id : {type: Schema.Types.ObjectId, ref : 'User'},
     item : {type: Schema.Types.ObjectId, ref : 'Item' },
 
+    // option : 후기 : 예약 고객은 별점, 내용 등의 후기를 남길 수 있다.
     content : {type : String, trim:true, required : true},
-    // 별점 - starScore
     starScore : {type : Number, default : 0},
-    // 인기순 - numLikes
-    numLikes : {type:Number, default:0}, 
     createdAt: {type:Date, default:Date.now}
 
     // 후기 사진
