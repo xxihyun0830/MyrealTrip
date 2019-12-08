@@ -1,0 +1,12 @@
+.answer.card
+  .card-body
+    .content= comment.content
+  .row.card-body
+    .col-sm
+    .col-sm.text-right
+      .user_id
+        | commented on #{moment(comment.createdAt).format('YYYY-MM-DD')}
+        if comment.user_id
+          | 
+          | by #[a(href=`/users/${comment.user_id.id}`)= comment.user_id.name]
+          | 별점 :  #[a(href=`/users/${comment.user_id.id}`)= comment.starScore]

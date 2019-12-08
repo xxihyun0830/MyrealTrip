@@ -1,0 +1,15 @@
+.form-group
+  label(for="place") 여행지
+  input.form-control(type="text", name="place", placeholder="여행지 장소", value=item.place)
+.form-group
+  label(for="title") 제목(이름)
+  input.form-control(type="text", name="title", placeholder="제목", value=item.title)
+.from-group
+  label(for="price") 가격
+  input.form-control(type="text", name = "price", value = item.price)
+.form-group
+  label(for="content") 설명
+  textarea.form-control(name="content", rows="5",placeholder="여행지 소개")= item.content
+.form-group
+  label(for="course") 여행코스
+  textarea.form-control(name="course", rows="8",placeholder="여행코스")= item.course

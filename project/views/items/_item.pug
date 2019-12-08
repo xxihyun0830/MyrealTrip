@@ -1,0 +1,16 @@
+.content= item.content
+
+.row
+  .col-sm
+    .numbers.
+      #[span.number.num-votes= item.numLikes] likes,
+      #[span.number.num-answers= item.numComments] comments,
+      
+  .col-sm
+    .user_id
+      | asked on #{moment(item.createdAt).format('YYYY-MM-DD')}
+      if item.user_id
+        | 
+        | by #[a(href=`/users/${item.user_id.id}`)= item.user_id.name] 
+        | by #[a(href=`/users/${item.user_id.id}`)= item.user_id.type_code] 
+
