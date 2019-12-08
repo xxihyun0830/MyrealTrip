@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  .container
+    h1.main-title 회원가입 (사용자 등록)  
+    form(action='/users', method='POST')
+      .form-group
+        label(for='name') 이름
+        input.form-control(type='text', id='name', name='name', placeholder='이름을 입력하세요')
+      .form-group
+        label(for='type_code') 사용자 코드
+        input.form-control(type='text', id='type_code', name='type_code', placeholder='사용자 코드를 입력하세요. 관리자는 adimin, 가이드는 guide, 일반고객은 customer를 입력하세요')
+      .form-group
+        label(for='email') 이메일 주소
+        input.form-control(type='email', id='email', name='email', placeholder='이메일 주소를 입력하세요')
+      .form-group
+        label(for='password') 비밀번호 설정
+        input.form-control(type='password', id='password', name='password', placeholder='Password')
+      .form-group
+        label(for='password_confirmation') 비밀번호 확인
+        input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
+      
+      
+         //-a.btn.btn-outline-secondary(href='/users') 사용자
+      | 
+      button.btn.btn-primary(type='submit') 회원가입하기 
