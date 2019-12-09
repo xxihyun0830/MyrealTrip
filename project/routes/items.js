@@ -32,7 +32,7 @@ router.get('/', catchErrors(async (req, res, next) => {
         page: page, 
         limit: limit
     });
-    res.render('items/index', {items: items, term: term, query: req.query});
+    res.render('items/index', {items: item, term: term, query: req.query});
 }));
 
 router.get('/new', needAuth, (req, res, next) => {
@@ -54,6 +54,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
     res.render('items/show', {item: item, comments: comments});
   }));
   
+  // 투어상품 수정하기
   router.put('/:id', catchErrors(async (req, res, next) => {
     const item = await Item.findById(req.params.id);
   
@@ -63,32 +64,34 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
     }
     item.title = req.body.title;
     item.content = req.body.content;
-    item.tags = req.body.tags.split(" ").map(e => e.trim());
-  
+   
     await item.save();
     req.flash('success', 'Successfully updated');
     res.redirect('/items');
   }));
   
+  // 투어상품 삭제하기
   router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
     await Item.findOneAndRemove({_id: req.params.id});
     req.flash('success', 'Successfully deleted');
     res.redirect('/items');
   }));
   
+  // 투어상품 보여주기-리스트
   router.post('/', needAuth, catchErrors(async (req, res, next) => {
     const user = req.user;
     var item = new item({
       title: req.body.title,
       user_id: user._id,
       content: req.body.content,
-      tags: req.body.tags.split(" ").map(e => e.trim()),
+      
     });
     await item.save();
     req.flash('success', 'Successfully posted');
     res.redirect('/items');
   }));
   
+  // 후기 보여주기
   router.post('/:id/comments', needAuth, catchErrors(async (req, res, next) => {
     const user = req.user;
     const item = await item.findById(req.params.id);

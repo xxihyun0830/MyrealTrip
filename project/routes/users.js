@@ -23,9 +23,9 @@ function validateForm(form, options) {
   if (!name) {
     return 'Name is required.';
   }
-  if (!type_code) {
-    return 'Type_code is required.';
-  }
+  // if (!type_code) {
+  //   return 'Type_code is required.';
+  // }
 
   if (!email) {
     return 'Email is required.';
@@ -61,6 +61,8 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   res.render('users/edit', {user: user});
 }));
 
+
+// 회원정보 수정
 router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
   const err = validateForm(req.body);
   if (err) {
@@ -89,17 +91,25 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
   res.redirect('/users');
 }));
 
+
+//회원정보 삭제
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findOneAndRemove({_id: req.params.id});
   req.flash('success', 'Deleted Successfully.');
   res.redirect('/users');
 }));
 
+
+//회원정보 조회
 router.get('/:id', catchErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  res.render('users/show', {user: user});
+  if (user.type_code == 'admin'){
+    return res.render('users/show', {user: user});
+  }  
 }));
 
+
+//회원정보 등록
 router.post('/', catchErrors(async (req, res, next) => {
   var err = validateForm(req.body, {needPassword: true});
   if (err) {
@@ -115,6 +125,7 @@ router.post('/', catchErrors(async (req, res, next) => {
   user = new User({
     name: req.body.name,
     email: req.body.email,
+    type_code: req.body.type_code
   });
   user.password = await user.generateHash(req.body.password);
   await user.save();
