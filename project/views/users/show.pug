@@ -1,6 +1,3 @@
-//- 이 페이지가 마이페이지 같은 거임
-//- 정보 수정 및 삭제, 조회 가능
-
 extends ../layout
 
 block content
@@ -22,12 +19,8 @@ block content
 
     hr
     p
-      if user.type_code == 'admin'
-        a.btn.btn-outline-secondary(href='/users/') List
-        | 
-        a.btn.btn-outline-danger.need-confirm-btn(href=`/users/${user._id}?_method=DELETE`) Delete
-      else
-      |
+      a.btn.btn-outline-secondary(href='/users/') List
+      | 
       a.btn.btn-outline-primary(href=`/users/${user._id}/edit`) Edit
-      
-      
+      | 
+      a.btn.btn-outline-danger.need-confirm-btn(href=`/users/${user._id}?_method=DELETE`) Delete

@@ -25,9 +25,4 @@ block content
             include _item
       +paginate(items, '/items', query)
     hr
-    if users.type_code == 'admin' 
-      a.btn.btn-danger(href='/items/new') Upload By admin
-    if users.type_code =='guide'
-      a.btn.btn-primary(href='/items/new') Upload By guide
-    //- a.btn.btn-primary(href='/items/new') Upload Tour Items
-    //- 투어상품 등록은 관리자와 가이드만 가능하다. 
+    a.btn.btn-primary(href='/items/new') Upload Tour Item
