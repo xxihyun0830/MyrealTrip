@@ -11,7 +11,7 @@ var schema = new Schema({
         
     // option : 다양한 정렬 : 인기순, 후기순, 가격순, 신상품순, 투어의 종류별(종류를 키워드로 분류할 예정임) 
     numLikes: {type: Number, default:0},
-    numComments : {type: Number, default : 0},
+    numItems : {type: Number, default : 0},
     price : {type : Number, default : 0, required:true},
     createdAt : {type : Date, default : Date.now}
 },{
@@ -21,6 +21,6 @@ var schema = new Schema({
 
 schema.plugin(mongoosePaginate);
 
-var Comment = mongoose.model('Comment', schema);
+var Item = mongoose.model('Item', schema);
 
-module.exports = Comment;
+module.exports = Item;

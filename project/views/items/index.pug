@@ -1,6 +1,9 @@
 extends ../layout
 include ../includes/_paginate
 
+//- 로그인 성공 이후 보여질 화면
+//- 투어상품 리스트가 쭉 나열되도록 보여준다-게시판의 질문글 이용하면 될 듯  
+
 block content
   .container
     form.form-inline.search-input-group(action='/items', method = 'GET')
