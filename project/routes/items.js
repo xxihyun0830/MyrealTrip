@@ -26,7 +26,7 @@ router.get('/', catchErrors(async (req, res, next) => {
         {numLikes: {'$regex': term, '$options': 'i'}}
         ]};
     }
-    const comment = await Comment.paginate(query, {
+    const items = await Item.paginate(query, {
         sort: {createdAt: -1}, 
         populate: 'user_id', 
         page: page, 
@@ -39,7 +39,7 @@ router.get('/new', needAuth, (req, res, next) => {
     res.render('items/new', {item: {}});
   });
   
-
+// 투어상품 수정-get
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
     const item = await Item.findById(req.params.id);
     res.render('items/edit', {item: item});
@@ -48,7 +48,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   router.get('/:id', catchErrors(async (req, res, next) => {
     const item = await Item.findById(req.params.id).populate('user_id');
     const comments = await Comment.find({item: item.id}).populate('user_id');
-    item.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
+    
   
     await item.save();
     res.render('items/show', {item: item, comments: comments});
