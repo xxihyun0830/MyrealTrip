@@ -26,7 +26,7 @@ router.get('/', catchErrors(async (req, res, next) => {
         {numLikes: {'$regex': term, '$options': 'i'}}
         ]};
     }
-    const comment = await Comment.paginate(query, {
+    const items = await Item.paginate(query, {
         sort: {createdAt: -1}, 
         populate: 'user_id', 
         page: page, 
@@ -48,12 +48,13 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   router.get('/:id', catchErrors(async (req, res, next) => {
     const item = await Item.findById(req.params.id).populate('user_id');
     const comments = await Comment.find({item: item.id}).populate('user_id');
-    item.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
+    
   
     await item.save();
     res.render('items/show', {item: item, comments: comments});
   }));
   
+  //투어상품 등록
   router.put('/:id', catchErrors(async (req, res, next) => {
     const item = await Item.findById(req.params.id);
   
@@ -63,13 +64,13 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
     }
     item.title = req.body.title;
     item.content = req.body.content;
-    item.tags = req.body.tags.split(" ").map(e => e.trim());
-  
+      
     await item.save();
     req.flash('success', 'Successfully updated');
     res.redirect('/items');
   }));
   
+  //투어상품 삭제
   router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
     await Item.findOneAndRemove({_id: req.params.id});
     req.flash('success', 'Successfully deleted');
@@ -82,7 +83,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
       title: req.body.title,
       user_id: user._id,
       content: req.body.content,
-      tags: req.body.tags.split(" ").map(e => e.trim()),
+      
     });
     await item.save();
     req.flash('success', 'Successfully posted');
@@ -98,7 +99,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
       return res.redirect('back');
     }
   
-    var comment = new comment({
+    var comment = new Comment({
       user_id: user._id,
       item: item._id,
       content: req.body.content
