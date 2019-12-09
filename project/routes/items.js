@@ -32,7 +32,7 @@ router.get('/', catchErrors(async (req, res, next) => {
         page: page, 
         limit: limit
     });
-    res.render('items/index', {items: item, term: term, query: req.query});
+    res.render('items/index', {items: items, term: term, query: req.query});
 }));
 
 router.get('/new', needAuth, (req, res, next) => {

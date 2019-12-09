@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 
-// email -> PK
 var schema = new Schema({
     name: {type: String, required: true, trim: true},
     email: {type: String, required: true, index: true, unique: true, trim: true},
